@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { Copy } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   urlEncode,
   urlDecode,
@@ -179,6 +181,8 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
   const [output, setOutput] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const tool = toolProp ?? tab;
   const showTabs = toolProp == null;
@@ -187,6 +191,11 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
   const run = async () => {
     setError(null);
     setOutput('');
+    if (copyTimeoutRef.current) {
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = null;
+    }
+    setCopied(false);
     if (!input.trim()) return;
     setLoading(true);
     try {
@@ -200,6 +209,21 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
   };
 
   const useExample = () => setInput(config.example.input);
+
+  const handleCopy = async () => {
+    if (!output) return;
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    try {
+      await navigator.clipboard.writeText(output);
+      setCopied(true);
+      copyTimeoutRef.current = setTimeout(() => {
+        copyTimeoutRef.current = null;
+        setCopied(false);
+      }, 1500);
+    } catch {
+      // Permission denied or unsupported; leave button state unchanged
+    }
+  };
 
   return (
     <section className="text-left mt-6">
@@ -247,7 +271,20 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
         )}
         {output && (
           <div className="mt-2">
-            <label className="block mb-1">Output</label>
+            <div className="flex items-center justify-between gap-2 mb-1">
+              <label className="font-medium">Output</label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleCopy}
+                className="shrink-0"
+                aria-label={copied ? 'Copied' : 'Copy to clipboard'}
+              >
+                <Copy className="size-3.5" aria-hidden />
+                {copied ? 'Copied!' : 'Copy'}
+              </Button>
+            </div>
             <pre className="m-0 p-3 bg-bg-elevated rounded-lg overflow-x-auto whitespace-pre-wrap break-all">
               {output}
             </pre>
