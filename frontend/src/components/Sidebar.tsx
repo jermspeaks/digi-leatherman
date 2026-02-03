@@ -86,8 +86,8 @@ export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
 
   return (
     <aside
-      className={`w-64 min-w-64 shrink-0 flex flex-col bg-sidebar-bg border-r border-border transition-[width,min-width] duration-200 ${
-        collapsed ? 'w-0 min-w-0 overflow-hidden border-r-0' : ''
+      className={`shrink-0 flex flex-col bg-sidebar-bg border-r border-border transition-[width,min-width] duration-200 ${
+        collapsed ? 'w-0 min-w-0 overflow-hidden border-r-0' : 'w-64 min-w-64'
       }`}
       aria-label="Tool navigation"
     >
