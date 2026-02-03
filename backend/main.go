@@ -2,10 +2,12 @@ package main
 
 import (
 	"log"
+	"log/slog"
 	"net/http"
 	"strings"
 
 	"digi-leatherman/backend/handlers"
+	"digi-leatherman/backend/middleware"
 )
 
 func main() {
@@ -26,8 +28,9 @@ func main() {
 	mux.HandleFunc("/api/string/sentence-case", cors(handlers.SentenceCase))
 
 	addr := ":8100"
-	log.Printf("server listening on %s", addr)
-	if err := http.ListenAndServe(addr, mux); err != nil {
+	handler := middleware.Recovery(middleware.Logging(mux))
+	slog.Info("server listening", "addr", addr)
+	if err := http.ListenAndServe(addr, handler); err != nil {
 		log.Fatal(err)
 	}
 }
