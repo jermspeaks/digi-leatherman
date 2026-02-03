@@ -26,6 +26,7 @@ func main() {
 	mux.HandleFunc("/api/string/camel-case", cors(handlers.CamelCase))
 	mux.HandleFunc("/api/string/pascal-case", cors(handlers.PascalCase))
 	mux.HandleFunc("/api/string/sentence-case", cors(handlers.SentenceCase))
+	mux.HandleFunc("/api/lorem-ipsum/generate", cors(handlers.LoremIpsum))
 
 	addr := ":8100"
 	handler := middleware.Recovery(middleware.Logging(mux))

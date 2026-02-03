@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Layout } from './components/Layout';
+import { LoremIpsum } from './components/LoremIpsum';
 import { Settings } from './components/Settings';
 import { StringTools } from './components/StringTools';
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="tools/string/camel-case" element={<StringTools tool="camel-case" />} />
             <Route path="tools/string/pascal-case" element={<StringTools tool="pascal-case" />} />
             <Route path="tools/string/sentence-case" element={<StringTools tool="sentence-case" />} />
+            <Route path="tools/lorem-ipsum" element={<LoremIpsum />} />
             <Route path="*" element={<Navigate to="/tools/string/url-encode" replace />} />
           </Route>
         </Routes>

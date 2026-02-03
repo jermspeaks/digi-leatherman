@@ -33,9 +33,11 @@ export const sidebarConfig: SidebarCategory[] = [
     ],
   },
   {
-    id: 'other',
-    label: 'Other',
-    items: [],
+    id: 'lorem-ipsum',
+    label: 'Lorem Ipsum',
+    items: [
+      { id: 'lorem-ipsum', label: 'Lorem Ipsum', path: '/tools/lorem-ipsum' },
+    ],
   },
 ];
 
