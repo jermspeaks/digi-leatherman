@@ -13,17 +13,19 @@ export function Layout() {
       <Navbar />
       <div className="layout-body">
         <div className="sidebar-toggle-strip">
-          <button
-            type="button"
-            className="sidebar-toggle-strip-btn"
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            aria-label={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            <span className="sidebar-toggle-strip-icon" aria-hidden>
-              {sidebarCollapsed ? '»' : '«'}
-            </span>
-          </button>
+          {sidebarCollapsed && (
+            <button
+              type="button"
+              className="sidebar-toggle-strip-btn"
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              aria-label="Expand sidebar"
+              title="Expand sidebar"
+            >
+              <span className="sidebar-toggle-strip-icon" aria-hidden>
+                »
+              </span>
+            </button>
+          )}
         </div>
         <Sidebar
           collapsed={sidebarCollapsed}

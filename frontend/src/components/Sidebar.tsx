@@ -91,6 +91,17 @@ export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
           );
         })}
       </nav>
+      {!collapsed && (
+        <button
+          type="button"
+          className="sidebar-collapse-toggle"
+          onClick={() => onCollapsedChange(true)}
+          aria-label="Collapse sidebar"
+          title="Collapse sidebar"
+        >
+          «
+        </button>
+      )}
     </aside>
   );
 }

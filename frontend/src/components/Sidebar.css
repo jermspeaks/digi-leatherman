@@ -89,3 +89,21 @@
   border-left-color: var(--color-sidebar-active-bar);
 }
 
+.sidebar-collapse-toggle {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 0;
+  cursor: pointer;
+  text-align: left;
+  border-top: 1px solid var(--color-border);
+}
+
+.sidebar-collapse-toggle:hover {
+  color: var(--color-text);
+  background-color: var(--color-sidebar-active);
+}
