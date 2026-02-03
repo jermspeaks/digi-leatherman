@@ -1,0 +1,82 @@
+.string-tools {
+  text-align: left;
+  margin-top: 1.5rem;
+}
+
+.string-tools h2 {
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.tool-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.tool-tabs button {
+  padding: 0.5rem 1rem;
+}
+
+.tool-tabs button.active {
+  border-color: #646cff;
+  background-color: rgba(100, 108, 255, 0.15);
+}
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 40rem;
+}
+
+.tool-card label {
+  font-weight: 500;
+}
+
+.tool-card textarea {
+  width: 100%;
+  min-height: 6rem;
+  padding: 0.6rem;
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #444;
+  resize: vertical;
+}
+
+@media (prefers-color-scheme: light) {
+  .tool-card textarea {
+    border-color: #ccc;
+  }
+}
+
+.tool-error {
+  color: #e74c3c;
+  margin: 0;
+}
+
+.tool-output {
+  margin-top: 0.5rem;
+}
+
+.tool-output label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.tool-output pre {
+  margin: 0;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+@media (prefers-color-scheme: light) {
+  .tool-output pre {
+    background: #f0f0f0;
+  }
+}
