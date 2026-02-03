@@ -66,6 +66,58 @@
   display: none;
 }
 
+.sidebar-subgroup {
+  list-style: none;
+  margin: 0;
+}
+
+.sidebar-subgroup-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.35rem 0.75rem 0.35rem 1.5rem;
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.sidebar-subgroup-heading:hover {
+  color: var(--color-text);
+  background-color: var(--color-sidebar-active);
+}
+
+.sidebar-subgroup-chevron {
+  font-size: 0.6rem;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.sidebar-subgroup-label {
+  flex: 1;
+}
+
+.sidebar-subgroup-items {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 2rem;
+}
+
+.sidebar-subgroup-items[hidden] {
+  display: none;
+}
+
+.sidebar-subgroup-items .sidebar-link {
+  margin-left: 0;
+  padding-left: 0.75rem;
+  border-left-width: 3px;
+}
+
 .sidebar-link {
   display: block;
   padding: 0.4rem 0.75rem;
@@ -86,6 +138,10 @@
 .sidebar-link.sidebar-link--active {
   color: var(--color-accent);
   background-color: var(--color-sidebar-active);
+  border-left-color: transparent;
+}
+
+.sidebar--collapsed .sidebar-link--active {
   border-left-color: var(--color-sidebar-active-bar);
 }
 
