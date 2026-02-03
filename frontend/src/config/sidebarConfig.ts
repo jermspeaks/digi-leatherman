@@ -48,6 +48,7 @@ export interface BreadcrumbLabels {
 
 /** Resolve path to breadcrumb labels: path -> labels */
 export function getBreadcrumbLabels(path: string): BreadcrumbLabels | null {
+  if (path === '/settings') return { categoryLabel: 'Settings' };
   for (const cat of sidebarConfig) {
     for (const item of cat.items) {
       if (item.path === path) {

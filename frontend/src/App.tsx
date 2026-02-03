@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Layout } from './components/Layout';
+import { Settings } from './components/Settings';
 import { StringTools } from './components/StringTools';
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Navigate to="/tools/string/url-encode" replace />} />
+            <Route path="settings" element={<Settings />} />
             <Route path="tools/string/url-encode" element={<StringTools tool="url-encode" />} />
             <Route path="tools/string/url-decode" element={<StringTools tool="url-decode" />} />
             <Route path="tools/string/base64-encode" element={<StringTools tool="base64-encode" />} />

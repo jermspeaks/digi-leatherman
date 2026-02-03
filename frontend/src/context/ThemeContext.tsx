@@ -1,40 +1,61 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useState } from 'react';
 
-export type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark' | 'system';
+
+export type EffectiveTheme = 'light' | 'dark';
 
 const STORAGE_KEY = 'digi-leatherman-theme';
 
 function getStoredTheme(): Theme | null {
   try {
     const v = localStorage.getItem(STORAGE_KEY);
-    if (v === 'light' || v === 'dark') return v;
+    if (v === 'light' || v === 'dark' || v === 'system') return v;
   } catch {
     /* ignore */
   }
   return null;
 }
 
-function getEffectiveTheme(): Theme {
-  const stored = getStoredTheme();
-  if (stored) return stored;
-  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    return 'light';
-  }
-  return 'dark';
+function getEffectiveThemeFromSystem(): EffectiveTheme {
+  if (typeof window === 'undefined') return 'dark';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function resolveEffectiveTheme(preference: Theme): EffectiveTheme {
+  if (preference === 'light' || preference === 'dark') return preference;
+  return getEffectiveThemeFromSystem();
 }
 
 type ThemeContextValue = {
   theme: Theme;
+  effectiveTheme: EffectiveTheme;
   setTheme: (theme: Theme) => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>(() => getEffectiveTheme());
+  const [theme, setThemeState] = useState<Theme>(() => getStoredTheme() ?? 'system');
+  const [effectiveTheme, setEffectiveTheme] = useState<EffectiveTheme>(() =>
+    resolveEffectiveTheme(theme)
+  );
 
   useLayoutEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
+    const next = resolveEffectiveTheme(theme);
+    setEffectiveTheme(next);
+    document.documentElement.setAttribute('data-theme', next);
+  }, [theme]);
+
+  useEffect(() => {
+    if (theme !== 'system') return;
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const handler = () => {
+      const next = getEffectiveThemeFromSystem();
+      setEffectiveTheme(next);
+      document.documentElement.setAttribute('data-theme', next);
+    };
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
   }, [theme]);
 
   useEffect(() => {
@@ -53,7 +74,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const setTheme = (next: Theme) => setThemeState(next);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, effectiveTheme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
