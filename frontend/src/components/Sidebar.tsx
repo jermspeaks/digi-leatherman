@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { sidebarConfig, type SidebarItem } from '../config/sidebarConfig';
-import './Sidebar.css';
 
 type SidebarProps = {
   collapsed: boolean;
@@ -27,6 +26,13 @@ function getItemGroups(items: SidebarItem[]): ItemGroup[] {
     items: groupMap.get(key)!,
   }));
 }
+
+const sidebarLinkBase =
+  'block py-[0.4rem] px-3 text-sm font-medium text-text-muted no-underline border-l-[3px] border-transparent -ml-6 pl-[2.0625rem] hover:text-text';
+const sidebarLinkSubgroup =
+  'block py-[0.4rem] px-3 text-sm font-medium text-text-muted no-underline border-l-[3px] border-transparent ml-0 pl-3 hover:text-text';
+const sidebarLinkActive = 'text-accent bg-sidebar-active border-transparent';
+const sidebarLinkActiveCollapsed = 'border-l-sidebar-active-bar';
 
 export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
   const location = useLocation();
@@ -80,34 +86,36 @@ export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
 
   return (
     <aside
-      className={`sidebar ${collapsed ? 'sidebar--collapsed' : ''}`}
+      className={`w-64 min-w-64 shrink-0 flex flex-col bg-sidebar-bg border-r border-border transition-[width,min-width] duration-200 ${
+        collapsed ? 'w-0 min-w-0 overflow-hidden border-r-0' : ''
+      }`}
       aria-label="Tool navigation"
     >
-      <nav className="sidebar-nav">
+      <nav className="flex-1 overflow-y-auto py-3">
         {sidebarConfig.map((category) => {
           const isExpanded = expandedIds.has(category.id);
           const hasItems = category.items.length > 0;
           const groups = getItemGroups(category.items);
 
           return (
-            <div key={category.id} className="sidebar-category">
+            <div key={category.id} className="mb-1">
               <button
                 type="button"
-                className="sidebar-category-heading"
+                className="flex items-center gap-2 w-full py-2 px-4 text-left text-[0.9rem] font-semibold text-text bg-transparent border-none cursor-pointer rounded-none hover:bg-sidebar-active"
                 onClick={() => toggleExpanded(category.id)}
                 aria-expanded={hasItems ? isExpanded : undefined}
                 aria-controls={`sidebar-cat-${category.id}`}
                 id={`sidebar-cat-heading-${category.id}`}
               >
-                <span className="sidebar-category-chevron" aria-hidden>
+                <span className="text-[0.65rem] text-text-muted shrink-0" aria-hidden>
                   {hasItems ? (isExpanded ? '▼' : '▶') : '○'}
                 </span>
-                <span className="sidebar-category-label">{category.label}</span>
+                <span className="flex-1">{category.label}</span>
               </button>
               {hasItems && (
                 <ul
                   id={`sidebar-cat-${category.id}`}
-                  className="sidebar-category-items"
+                  className="list-none m-0 pl-6"
                   role="group"
                   aria-labelledby={`sidebar-cat-heading-${category.id}`}
                   hidden={!isExpanded}
@@ -120,7 +128,7 @@ export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
                           <NavLink
                             to={item.path}
                             className={({ isActive: active }) =>
-                              `sidebar-link ${active ? 'sidebar-link--active' : ''}`
+                              `${sidebarLinkBase} ${active ? sidebarLinkActive : ''} ${active && collapsed ? sidebarLinkActiveCollapsed : ''}`
                             }
                             end={false}
                           >
@@ -132,25 +140,23 @@ export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
                     const subId = `${category.id}--${group.key}`;
                     const isSubExpanded = expandedIds.has(subId);
                     return (
-                      <li key={group.key} className="sidebar-subgroup">
+                      <li key={group.key} className="list-none m-0">
                         <button
                           type="button"
-                          className="sidebar-subgroup-heading"
+                          className="flex items-center gap-[0.35rem] w-full py-[0.35rem] px-3 pl-6 text-left text-[0.8rem] font-medium text-text-muted bg-transparent border-none cursor-pointer rounded-none hover:text-text hover:bg-sidebar-active"
                           onClick={() => toggleExpanded(subId)}
                           aria-expanded={isSubExpanded}
                           aria-controls={`sidebar-sub-${subId}`}
                           id={`sidebar-sub-heading-${subId}`}
                         >
-                          <span className="sidebar-subgroup-chevron" aria-hidden>
+                          <span className="text-[0.6rem] text-text-muted shrink-0" aria-hidden>
                             {isSubExpanded ? '▼' : '▶'}
                           </span>
-                          <span className="sidebar-subgroup-label">
-                            {group.label}
-                          </span>
+                          <span className="flex-1">{group.label}</span>
                         </button>
                         <ul
                           id={`sidebar-sub-${subId}`}
-                          className="sidebar-subgroup-items"
+                          className="list-none m-0 pl-8"
                           role="group"
                           aria-labelledby={`sidebar-sub-heading-${subId}`}
                           hidden={!isSubExpanded}
@@ -160,7 +166,7 @@ export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
                               <NavLink
                                 to={item.path}
                                 className={({ isActive: active }) =>
-                                  `sidebar-link ${active ? 'sidebar-link--active' : ''}`
+                                  `${sidebarLinkSubgroup} ${active ? sidebarLinkActive : ''} ${active && collapsed ? sidebarLinkActiveCollapsed : ''}`
                                 }
                                 end={false}
                               >
@@ -181,7 +187,7 @@ export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
       {!collapsed && (
         <button
           type="button"
-          className="sidebar-collapse-toggle"
+          className="shrink-0 py-2 px-4 m-2 text-sm text-text-muted bg-transparent border border-border rounded-none cursor-pointer text-left hover:text-text hover:bg-sidebar-active"
           onClick={() => onCollapsedChange(true)}
           aria-label="Collapse sidebar"
           title="Collapse sidebar"

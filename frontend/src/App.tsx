@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { Layout } from './components/Layout';
 import { StringTools } from './components/StringTools';
-import './App.css';
 
 function App() {
   return (

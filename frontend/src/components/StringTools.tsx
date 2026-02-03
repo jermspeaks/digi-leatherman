@@ -15,7 +15,6 @@ import {
   sentenceCase,
 } from '../api/stringTools';
 import type { StringResult } from '../api/stringTools';
-import './StringTools.css';
 
 export type StringToolId =
   | 'url-encode'
@@ -90,15 +89,15 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
   };
 
   return (
-    <section className="string-tools">
-      <h2>Strings</h2>
+    <section className="text-left mt-6">
+      <h2 className="mb-3 text-2xl text-text">Strings</h2>
       {showTabs && (
-        <nav className="tool-tabs" aria-label="String tools">
+        <nav className="flex gap-2 mb-4" aria-label="String tools">
           {TOOL_CONFIG.map((c) => (
             <button
               key={c.id}
               type="button"
-              className={tab === c.id ? 'active' : ''}
+              className={`py-2 px-4 ${tab === c.id ? 'border-accent bg-sidebar-active' : ''}`}
               onClick={() => setTab(c.id)}
             >
               {c.label}
@@ -106,10 +105,13 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
           ))}
         </nav>
       )}
-      <div className="tool-card">
-        <label htmlFor="string-input">Input</label>
+      <div className="flex flex-col gap-3 max-w-2xl">
+        <label htmlFor="string-input" className="font-medium">
+          Input
+        </label>
         <textarea
           id="string-input"
+          className="w-full min-h-24 p-2.5 font-inherit text-base rounded-lg border border-border bg-bg text-text resize-y"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder={config.placeholder}
@@ -119,14 +121,16 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
           {loading ? '…' : config.buttonLabel}
         </button>
         {error && (
-          <p className="tool-error" role="alert">
+          <p className="text-red-500 m-0" role="alert">
             {error}
           </p>
         )}
         {output && (
-          <div className="tool-output">
-            <label>Output</label>
-            <pre>{output}</pre>
+          <div className="mt-2">
+            <label className="block mb-1">Output</label>
+            <pre className="m-0 p-3 bg-bg-elevated rounded-lg overflow-x-auto whitespace-pre-wrap break-all">
+              {output}
+            </pre>
           </div>
         )}
       </div>
