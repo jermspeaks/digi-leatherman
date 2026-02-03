@@ -13,7 +13,7 @@ cd backend
 go run .
 ```
 
-The API listens on **http://localhost:8080**. Endpoints:
+The API listens on **http://localhost:8100**. Endpoints:
 
 - `POST /api/string/url-encode` — body: `{"value": "..."}` → `{"result": "encoded%20string"}`
 - `POST /api/string/url-decode` — body: `{"value": "..."}` → `{"result": "decoded string"}`
@@ -28,7 +28,7 @@ npm install   # if you haven't already
 npm run dev
 ```
 
-Open **http://localhost:5173**. The UI has “String tools” with **URL encode** and **URL decode**; enter text, click Encode/Decode, and see the result. The frontend uses `VITE_API_URL` (default `http://localhost:8080`); copy `.env.example` to `.env` and change it if your API runs elsewhere.
+Open **http://localhost:5273**. The UI has “String tools” with **URL encode** and **URL decode**; enter text, click Encode/Decode, and see the result. The frontend uses `VITE_API_URL` (default `http://localhost:8100`); copy `.env.example` to `.env` and change it if your API runs elsewhere.
 
 ## Adding more tools
 
