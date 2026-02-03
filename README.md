@@ -15,6 +15,16 @@ go run .
 
 The API listens on **http://localhost:8100**. All string endpoints use body `{"value": "..."}` and return `{"result": "..."}`.
 
+**Run backend tests:**
+
+```bash
+cd backend
+go test ./...
+go test ./handlers/... -cover   # with coverage
+```
+
+Unit tests live in `backend/handlers/string_test.go` (table-driven tests for the string handlers and pure case/encoding logic).
+
 **String API endpoints:**
 
 - **URL:** `POST /api/string/url-encode`, `POST /api/string/url-decode`
