@@ -161,6 +161,11 @@ const TOOL_CONFIG: ToolConfig[] = [
   },
 ];
 
+/** Map of tool id to description for command palette search. */
+export const TOOL_DESCRIPTIONS: Record<string, string> = Object.fromEntries(
+  TOOL_CONFIG.map((c) => [c.id, c.description])
+);
+
 const TOOL_MAP = Object.fromEntries(TOOL_CONFIG.map((c) => [c.id, c])) as Record<StringToolId, ToolConfig>;
 
 type StringToolsProps = {
