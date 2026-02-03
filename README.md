@@ -28,7 +28,7 @@ npm install   # if you haven't already
 npm run dev
 ```
 
-Open **http://localhost:5273**. The UI has “String tools” with **URL encode** and **URL decode**; enter text, click Encode/Decode, and see the result. The frontend uses `VITE_API_URL` (default `http://localhost:8100`); copy `.env.example` to `.env` and change it if your API runs elsewhere.
+Open **http://localhost:5273**. The UI has “String tools” with **URL encode** and **URL decode**; enter text, click Encode/Decode, and see the result. The frontend uses `VITE_API_URL` (default `http://localhost:8100`); copy `.env.example` to `.env` and change it if your API runs elsewhere. If you see a CORS or connection error, ensure `VITE_API_URL` points to where the backend is running (default port **8100**).
 
 ## Adding more tools
 
