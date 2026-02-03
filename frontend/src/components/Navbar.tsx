@@ -29,6 +29,8 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
           >
             Digi Leatherman
           </Link>
+        </div>
+        <div className="flex items-center gap-1 shrink-0">
           {onOpenCommandPalette && (
             <button
               type="button"
@@ -43,27 +45,30 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
               </kbd>
             </button>
           )}
+          <nav
+            className="flex items-center gap-1 shrink-0"
+            aria-label="Primary"
+          >
+            <NavLink
+              to="/tools/string/url-encode"
+              className={({ isActive }) =>
+                `${navLinkBase} ${isActive || isTools ? navLinkActive : "text-text-muted"}`
+              }
+              end={false}
+            >
+              Tools
+            </NavLink>
+            <NavLink
+              to="/settings"
+              className={({ isActive }) =>
+                `${navLinkBase} ${isActive || isSettings ? navLinkActive : "text-text-muted"}`
+              }
+              end
+            >
+              Settings
+            </NavLink>
+          </nav>
         </div>
-        <nav className="flex items-center gap-1 shrink-0" aria-label="Primary">
-          <NavLink
-            to="/tools/string/url-encode"
-            className={({ isActive }) =>
-              `${navLinkBase} ${isActive || isTools ? navLinkActive : "text-text-muted"}`
-            }
-            end={false}
-          >
-            Tools
-          </NavLink>
-          <NavLink
-            to="/settings"
-            className={({ isActive }) =>
-              `${navLinkBase} ${isActive || isSettings ? navLinkActive : "text-text-muted"}`
-            }
-            end
-          >
-            Settings
-          </NavLink>
-        </nav>
       </div>
     </header>
   );
