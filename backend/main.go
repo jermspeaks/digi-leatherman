@@ -27,6 +27,11 @@ func main() {
 	mux.HandleFunc("/api/string/pascal-case", cors(handlers.PascalCase))
 	mux.HandleFunc("/api/string/sentence-case", cors(handlers.SentenceCase))
 	mux.HandleFunc("/api/lorem-ipsum/generate", cors(handlers.LoremIpsum))
+	mux.HandleFunc("/api/json/format", cors(handlers.FormatJSON))
+	mux.HandleFunc("/api/json/minify", cors(handlers.MinifyJSON))
+	mux.HandleFunc("/api/json/validate", cors(handlers.ValidateJSON))
+	mux.HandleFunc("/api/json/path", cors(handlers.PathQueryJSON))
+	mux.HandleFunc("/api/json/diff", cors(handlers.DiffJSON))
 
 	addr := ":8100"
 	handler := middleware.Recovery(middleware.Logging(mux))

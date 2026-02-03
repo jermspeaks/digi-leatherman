@@ -49,6 +49,17 @@ export const sidebarConfig: SidebarCategory[] = [
       { id: 'json', label: 'JSON', path: '/tools/lorem-ipsum/json', subGroup: 'json' },
     ],
   },
+  {
+    id: 'json',
+    label: 'JSON',
+    items: [
+      { id: 'format', label: 'Format', path: '/tools/json/format', subGroup: 'Format' },
+      { id: 'minify', label: 'Minify', path: '/tools/json/minify', subGroup: 'Format' },
+      { id: 'validate', label: 'Validate', path: '/tools/json/validate', subGroup: 'Validate' },
+      { id: 'path', label: 'Path query', path: '/tools/json/path', subGroup: 'Query' },
+      { id: 'diff', label: 'Diff', path: '/tools/json/diff', subGroup: 'Compare' },
+    ],
+  },
 ];
 
 export interface BreadcrumbLabels {

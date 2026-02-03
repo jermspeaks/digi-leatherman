@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Layout } from './components/Layout';
+import { JsonTools } from './components/JsonTools';
 import { LoremTools } from './components/LoremTools';
 import { Settings } from './components/Settings';
 import { StringTools } from './components/StringTools';
@@ -40,6 +41,12 @@ function App() {
             <Route path="tools/lorem-ipsum/html" element={<LoremTools tool="html" />} />
             <Route path="tools/lorem-ipsum/markdown" element={<LoremTools tool="markdown" />} />
             <Route path="tools/lorem-ipsum/json" element={<LoremTools tool="json" />} />
+            <Route path="tools/json" element={<Navigate to="/tools/json/format" replace />} />
+            <Route path="tools/json/format" element={<JsonTools tool="format" />} />
+            <Route path="tools/json/minify" element={<JsonTools tool="minify" />} />
+            <Route path="tools/json/validate" element={<JsonTools tool="validate" />} />
+            <Route path="tools/json/path" element={<JsonTools tool="path" />} />
+            <Route path="tools/json/diff" element={<JsonTools tool="diff" />} />
             <Route path="*" element={<Navigate to="/tools/string/url-encode" replace />} />
           </Route>
         </Routes>
