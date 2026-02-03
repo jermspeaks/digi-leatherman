@@ -34,25 +34,131 @@ export type StringToolId =
 type ToolConfig = {
   id: StringToolId;
   label: string;
+  description: string;
+  example: { input: string; output: string };
   placeholder: string;
   buttonLabel: string;
   apiFn: (value: string) => Promise<StringResult>;
 };
 
 const TOOL_CONFIG: ToolConfig[] = [
-  { id: 'url-encode', label: 'URL encode', placeholder: 'Text to encode…', buttonLabel: 'Encode', apiFn: urlEncode },
-  { id: 'url-decode', label: 'URL decode', placeholder: 'Encoded string to decode…', buttonLabel: 'Decode', apiFn: urlDecode },
-  { id: 'base64-encode', label: 'Base64 encode', placeholder: 'Text to encode…', buttonLabel: 'Encode', apiFn: base64Encode },
-  { id: 'base64-decode', label: 'Base64 decode', placeholder: 'Base64 string to decode…', buttonLabel: 'Decode', apiFn: base64Decode },
-  { id: 'trim', label: 'Trim', placeholder: 'Text to trim…', buttonLabel: 'Trim', apiFn: trim },
-  { id: 'upper-case', label: 'Upper Case', placeholder: 'Text to convert…', buttonLabel: 'Convert', apiFn: upperCase },
-  { id: 'lower-case', label: 'Lower Case', placeholder: 'Text to convert…', buttonLabel: 'Convert', apiFn: lowerCase },
-  { id: 'capital-case', label: 'Capital Case', placeholder: 'Text to convert…', buttonLabel: 'Convert', apiFn: capitalCase },
-  { id: 'snake-case', label: 'Snake Case', placeholder: 'Text to convert…', buttonLabel: 'Convert', apiFn: snakeCase },
-  { id: 'kebab-case', label: 'Kebab Case', placeholder: 'Text to convert…', buttonLabel: 'Convert', apiFn: kebabCase },
-  { id: 'camel-case', label: 'Camel Case', placeholder: 'Text to convert…', buttonLabel: 'Convert', apiFn: camelCase },
-  { id: 'pascal-case', label: 'Pascal Case', placeholder: 'Text to convert…', buttonLabel: 'Convert', apiFn: pascalCase },
-  { id: 'sentence-case', label: 'Sentence Case', placeholder: 'Text to convert…', buttonLabel: 'Convert', apiFn: sentenceCase },
+  {
+    id: 'url-encode',
+    label: 'URL encode',
+    description: 'Encodes text for safe use in URL query strings (spaces become +, special characters percent-encoded).',
+    example: { input: 'hello world', output: 'hello+world' },
+    placeholder: 'Text to encode…',
+    buttonLabel: 'Encode',
+    apiFn: urlEncode,
+  },
+  {
+    id: 'url-decode',
+    label: 'URL decode',
+    description: 'Decodes URL-encoded text back to plain text.',
+    example: { input: 'hello+world', output: 'hello world' },
+    placeholder: 'Encoded string to decode…',
+    buttonLabel: 'Decode',
+    apiFn: urlDecode,
+  },
+  {
+    id: 'base64-encode',
+    label: 'Base64 encode',
+    description: 'Encodes text to Base64.',
+    example: { input: 'Hi', output: 'SGk=' },
+    placeholder: 'Text to encode…',
+    buttonLabel: 'Encode',
+    apiFn: base64Encode,
+  },
+  {
+    id: 'base64-decode',
+    label: 'Base64 decode',
+    description: 'Decodes Base64 back to plain text.',
+    example: { input: 'SGk=', output: 'Hi' },
+    placeholder: 'Base64 string to decode…',
+    buttonLabel: 'Decode',
+    apiFn: base64Decode,
+  },
+  {
+    id: 'trim',
+    label: 'Trim',
+    description: 'Removes leading and trailing whitespace.',
+    example: { input: '  hello world  ', output: 'hello world' },
+    placeholder: 'Text to trim…',
+    buttonLabel: 'Trim',
+    apiFn: trim,
+  },
+  {
+    id: 'upper-case',
+    label: 'Upper Case',
+    description: 'Converts all characters to uppercase.',
+    example: { input: 'Hello World', output: 'HELLO WORLD' },
+    placeholder: 'Text to convert…',
+    buttonLabel: 'Convert',
+    apiFn: upperCase,
+  },
+  {
+    id: 'lower-case',
+    label: 'Lower Case',
+    description: 'Converts all characters to lowercase.',
+    example: { input: 'Hello World', output: 'hello world' },
+    placeholder: 'Text to convert…',
+    buttonLabel: 'Convert',
+    apiFn: lowerCase,
+  },
+  {
+    id: 'capital-case',
+    label: 'Capital Case',
+    description: 'Converts to title case (first letter of each word uppercase).',
+    example: { input: 'hello world', output: 'Hello World' },
+    placeholder: 'Text to convert…',
+    buttonLabel: 'Convert',
+    apiFn: capitalCase,
+  },
+  {
+    id: 'snake-case',
+    label: 'Snake Case',
+    description: 'Converts words to snake_case (lowercase with underscores).',
+    example: { input: 'hello world', output: 'hello_world' },
+    placeholder: 'Text to convert…',
+    buttonLabel: 'Convert',
+    apiFn: snakeCase,
+  },
+  {
+    id: 'kebab-case',
+    label: 'Kebab Case',
+    description: 'Converts words to kebab-case (lowercase with hyphens).',
+    example: { input: 'hello world', output: 'hello-world' },
+    placeholder: 'Text to convert…',
+    buttonLabel: 'Convert',
+    apiFn: kebabCase,
+  },
+  {
+    id: 'camel-case',
+    label: 'Camel Case',
+    description: 'Converts words to camelCase (first word lowercase, rest capitalized).',
+    example: { input: 'hello world', output: 'helloWorld' },
+    placeholder: 'Text to convert…',
+    buttonLabel: 'Convert',
+    apiFn: camelCase,
+  },
+  {
+    id: 'pascal-case',
+    label: 'Pascal Case',
+    description: 'Converts words to PascalCase (each word capitalized).',
+    example: { input: 'hello world', output: 'HelloWorld' },
+    placeholder: 'Text to convert…',
+    buttonLabel: 'Convert',
+    apiFn: pascalCase,
+  },
+  {
+    id: 'sentence-case',
+    label: 'Sentence Case',
+    description: 'Converts to sentence case (first character uppercase, rest lowercase).',
+    example: { input: 'HELLO WORLD', output: 'Hello world' },
+    placeholder: 'Text to convert…',
+    buttonLabel: 'Convert',
+    apiFn: sentenceCase,
+  },
 ];
 
 const TOOL_MAP = Object.fromEntries(TOOL_CONFIG.map((c) => [c.id, c])) as Record<StringToolId, ToolConfig>;
@@ -88,6 +194,8 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
     }
   };
 
+  const useExample = () => setInput(config.example.input);
+
   return (
     <section className="text-left mt-6">
       <h2 className="mb-3 text-2xl text-text">Strings</h2>
@@ -105,6 +213,13 @@ export function StringTools({ tool: toolProp }: StringToolsProps) {
           ))}
         </nav>
       )}
+      <p className="mb-2 text-text-secondary max-w-2xl">{config.description}</p>
+      <p className="mb-4 text-sm text-text-secondary max-w-2xl">
+        Example: <code className="px-1 rounded bg-bg-elevated">{config.example.input}</code> → <code className="px-1 rounded bg-bg-elevated">{config.example.output}</code>
+        <button type="button" onClick={useExample} className="ml-2 text-accent hover:underline">
+          Use example
+        </button>
+      </p>
       <div className="flex flex-col gap-3 max-w-2xl">
         <label htmlFor="string-input" className="font-medium">
           Input

@@ -23,7 +23,8 @@ type StringResponse struct {
 	Result string `json:"result"`
 }
 
-// URLEncode encodes the request value using url.QueryEscape and returns JSON.
+// URLEncode encodes the request value for safe use in URL query strings (spaces become +, special chars percent-encoded).
+// Example: "hello world" -> "hello+world".
 func URLEncode(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -38,7 +39,8 @@ func URLEncode(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: result})
 }
 
-// URLDecode decodes the request value using url.QueryUnescape and returns JSON.
+// URLDecode decodes URL-encoded text back to plain text.
+// Example: "hello+world" -> "hello world".
 func URLDecode(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -123,7 +125,8 @@ func decodeBody(w http.ResponseWriter, r *http.Request) (StringRequest, bool) {
 	return req, true
 }
 
-// Base64Encode encodes the request value as base64 and returns JSON.
+// Base64Encode encodes the request value as Base64.
+// Example: "Hi" -> "SGk=".
 func Base64Encode(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -133,7 +136,8 @@ func Base64Encode(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: result})
 }
 
-// Base64Decode decodes the request value from base64 and returns JSON.
+// Base64Decode decodes Base64 back to plain text.
+// Example: "SGk=" -> "Hi".
 func Base64Decode(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -147,7 +151,8 @@ func Base64Decode(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: string(result)})
 }
 
-// Trim trims leading and trailing whitespace and returns JSON.
+// Trim removes leading and trailing whitespace from the request value.
+// Example: "  hello world  " -> "hello world".
 func Trim(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -156,7 +161,8 @@ func Trim(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: strings.TrimSpace(req.Value)})
 }
 
-// UpperCase converts the request value to uppercase and returns JSON.
+// UpperCase converts all characters in the request value to uppercase.
+// Example: "Hello World" -> "HELLO WORLD".
 func UpperCase(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -165,7 +171,8 @@ func UpperCase(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: strings.ToUpper(req.Value)})
 }
 
-// LowerCase converts the request value to lowercase and returns JSON.
+// LowerCase converts all characters in the request value to lowercase.
+// Example: "Hello World" -> "hello world".
 func LowerCase(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -174,7 +181,8 @@ func LowerCase(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: strings.ToLower(req.Value)})
 }
 
-// CapitalCase converts the request value to title case and returns JSON.
+// CapitalCase converts the request value to title case (first letter of each word uppercase).
+// Example: "hello world" -> "Hello World".
 func CapitalCase(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -184,7 +192,8 @@ func CapitalCase(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: caser.String(req.Value)})
 }
 
-// SnakeCase converts the request value to snake_case and returns JSON.
+// SnakeCase converts words in the request value to snake_case (lowercase with underscores).
+// Example: "hello world" -> "hello_world".
 func SnakeCase(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -193,7 +202,8 @@ func SnakeCase(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: toSnake(req.Value)})
 }
 
-// KebabCase converts the request value to kebab-case and returns JSON.
+// KebabCase converts words in the request value to kebab-case (lowercase with hyphens).
+// Example: "hello world" -> "hello-world".
 func KebabCase(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -202,7 +212,8 @@ func KebabCase(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: toKebab(req.Value)})
 }
 
-// CamelCase converts the request value to camelCase and returns JSON.
+// CamelCase converts words in the request value to camelCase (first word lowercase, rest capitalized).
+// Example: "hello world" -> "helloWorld".
 func CamelCase(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -211,7 +222,8 @@ func CamelCase(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: toCamel(req.Value)})
 }
 
-// PascalCase converts the request value to PascalCase and returns JSON.
+// PascalCase converts words in the request value to PascalCase (each word capitalized).
+// Example: "hello world" -> "HelloWorld".
 func PascalCase(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
@@ -220,7 +232,8 @@ func PascalCase(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, StringResponse{Result: toPascal(req.Value)})
 }
 
-// SentenceCase converts the first character to uppercase and the rest to lowercase and returns JSON.
+// SentenceCase converts the request value to sentence case (first character uppercase, rest lowercase).
+// Example: "HELLO WORLD" -> "Hello world".
 func SentenceCase(w http.ResponseWriter, r *http.Request) {
 	req, ok := decodeBody(w, r)
 	if !ok {
