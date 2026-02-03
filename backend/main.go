@@ -13,6 +13,17 @@ func main() {
 
 	mux.HandleFunc("/api/string/url-encode", cors(handlers.URLEncode))
 	mux.HandleFunc("/api/string/url-decode", cors(handlers.URLDecode))
+	mux.HandleFunc("/api/string/base64-encode", cors(handlers.Base64Encode))
+	mux.HandleFunc("/api/string/base64-decode", cors(handlers.Base64Decode))
+	mux.HandleFunc("/api/string/trim", cors(handlers.Trim))
+	mux.HandleFunc("/api/string/upper-case", cors(handlers.UpperCase))
+	mux.HandleFunc("/api/string/lower-case", cors(handlers.LowerCase))
+	mux.HandleFunc("/api/string/capital-case", cors(handlers.CapitalCase))
+	mux.HandleFunc("/api/string/snake-case", cors(handlers.SnakeCase))
+	mux.HandleFunc("/api/string/kebab-case", cors(handlers.KebabCase))
+	mux.HandleFunc("/api/string/camel-case", cors(handlers.CamelCase))
+	mux.HandleFunc("/api/string/pascal-case", cors(handlers.PascalCase))
+	mux.HandleFunc("/api/string/sentence-case", cors(handlers.SentenceCase))
 
 	addr := ":8100"
 	log.Printf("server listening on %s", addr)

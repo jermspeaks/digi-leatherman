@@ -13,15 +13,26 @@ export interface SidebarCategory {
 export const sidebarConfig: SidebarCategory[] = [
   {
     id: 'string',
-    label: 'String tools',
+    label: 'Strings',
     items: [
       { id: 'url-encode', label: 'URL encode', path: '/tools/string/url-encode' },
       { id: 'url-decode', label: 'URL decode', path: '/tools/string/url-decode' },
+      { id: 'base64-encode', label: 'Base64 encode', path: '/tools/string/base64-encode' },
+      { id: 'base64-decode', label: 'Base64 decode', path: '/tools/string/base64-decode' },
+      { id: 'trim', label: 'Trim', path: '/tools/string/trim' },
+      { id: 'upper-case', label: 'Upper Case', path: '/tools/string/upper-case' },
+      { id: 'lower-case', label: 'Lower Case', path: '/tools/string/lower-case' },
+      { id: 'capital-case', label: 'Capital Case', path: '/tools/string/capital-case' },
+      { id: 'snake-case', label: 'Snake Case', path: '/tools/string/snake-case' },
+      { id: 'kebab-case', label: 'Kebab Case', path: '/tools/string/kebab-case' },
+      { id: 'camel-case', label: 'Camel Case', path: '/tools/string/camel-case' },
+      { id: 'pascal-case', label: 'Pascal Case', path: '/tools/string/pascal-case' },
+      { id: 'sentence-case', label: 'Sentence Case', path: '/tools/string/sentence-case' },
     ],
   },
   {
     id: 'other',
-    label: 'Other tools',
+    label: 'Other',
     items: [],
   },
 ];
