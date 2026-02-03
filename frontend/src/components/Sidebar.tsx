@@ -91,17 +91,6 @@ export function Sidebar({ collapsed, onCollapsedChange }: SidebarProps) {
           );
         })}
       </nav>
-      <button
-        type="button"
-        className="sidebar-collapse-toggle"
-        onClick={() => onCollapsedChange(!collapsed)}
-        aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-        title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-      >
-        <span className="sidebar-collapse-icon" aria-hidden>
-          {collapsed ? '»' : '«'}
-        </span>
-      </button>
     </aside>
   );
 }
