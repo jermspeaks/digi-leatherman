@@ -1,20 +1,23 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
+import { Layout } from './components/Layout';
 import { StringTools } from './components/StringTools';
 import './App.css';
 
 function App() {
   return (
-    <>
-      <header>
-        <h1>Digi Leatherman</h1>
-        <nav className="main-nav" aria-label="Tool categories">
-          <span className="nav-item active">String tools</span>
-          <span className="nav-item disabled">Other tools</span>
-        </nav>
-      </header>
-      <main>
-        <StringTools />
-      </main>
-    </>
+    <ThemeProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Navigate to="/tools/string/url-encode" replace />} />
+            <Route path="tools/string/url-encode" element={<StringTools tool="url-encode" />} />
+            <Route path="tools/string/url-decode" element={<StringTools tool="url-decode" />} />
+            <Route path="*" element={<Navigate to="/tools/string/url-encode" replace />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

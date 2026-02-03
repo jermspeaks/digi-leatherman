@@ -6,6 +6,7 @@
 .string-tools h2 {
   margin-bottom: 0.75rem;
   font-size: 1.5rem;
+  color: var(--color-text);
 }
 
 .tool-tabs {
@@ -19,8 +20,8 @@
 }
 
 .tool-tabs button.active {
-  border-color: #646cff;
-  background-color: rgba(100, 108, 255, 0.15);
+  border-color: var(--color-accent);
+  background-color: var(--color-sidebar-active);
 }
 
 .tool-card {
@@ -41,14 +42,10 @@
   font-family: inherit;
   font-size: 1rem;
   border-radius: 8px;
-  border: 1px solid #444;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  color: var(--color-text);
   resize: vertical;
-}
-
-@media (prefers-color-scheme: light) {
-  .tool-card textarea {
-    border-color: #ccc;
-  }
 }
 
 .tool-error {
@@ -68,15 +65,9 @@
 .tool-output pre {
   margin: 0;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.2);
+  background-color: var(--color-bg-elevated);
   border-radius: 8px;
   overflow-x: auto;
   white-space: pre-wrap;
   word-break: break-all;
-}
-
-@media (prefers-color-scheme: light) {
-  .tool-output pre {
-    background: #f0f0f0;
-  }
 }

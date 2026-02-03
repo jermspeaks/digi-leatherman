@@ -1,0 +1,38 @@
+.breadcrumbs {
+  margin-bottom: 0.75rem;
+}
+
+.breadcrumbs-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.breadcrumbs-list li {
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumbs-sep {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.breadcrumbs-list a {
+  color: var(--color-text-muted);
+}
+
+.breadcrumbs-list a:hover {
+  color: var(--color-accent);
+}
+
+.breadcrumbs-list [aria-current="page"] {
+  color: var(--color-text);
+  font-weight: 500;
+}
