@@ -36,7 +36,17 @@ export const sidebarConfig: SidebarCategory[] = [
     id: 'lorem-ipsum',
     label: 'Lorem Ipsum',
     items: [
-      { id: 'lorem-ipsum', label: 'Lorem Ipsum', path: '/tools/lorem-ipsum' },
+      { id: 'generator', label: 'Generator', path: '/tools/lorem-ipsum/generator' },
+      { id: 'characters', label: 'Characters', path: '/tools/lorem-ipsum/characters' },
+      { id: 'bytes', label: 'Bytes', path: '/tools/lorem-ipsum/bytes' },
+      { id: 'title', label: 'Title', path: '/tools/lorem-ipsum/title' },
+      { id: 'slug', label: 'Slug', path: '/tools/lorem-ipsum/slug' },
+      { id: 'camel-case', label: 'Camel Case', path: '/tools/lorem-ipsum/camel-case' },
+      { id: 'list', label: 'Lists', path: '/tools/lorem-ipsum/list' },
+      { id: 'headings', label: 'Headings', path: '/tools/lorem-ipsum/headings' },
+      { id: 'html', label: 'HTML', path: '/tools/lorem-ipsum/html' },
+      { id: 'markdown', label: 'Markdown', path: '/tools/lorem-ipsum/markdown' },
+      { id: 'json', label: 'JSON', path: '/tools/lorem-ipsum/json' },
     ],
   },
 ];

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Layout } from './components/Layout';
-import { LoremIpsum } from './components/LoremIpsum';
+import { LoremTools } from './components/LoremTools';
 import { Settings } from './components/Settings';
 import { StringTools } from './components/StringTools';
 
@@ -28,7 +28,18 @@ function App() {
             <Route path="tools/string/camel-case" element={<StringTools tool="camel-case" />} />
             <Route path="tools/string/pascal-case" element={<StringTools tool="pascal-case" />} />
             <Route path="tools/string/sentence-case" element={<StringTools tool="sentence-case" />} />
-            <Route path="tools/lorem-ipsum" element={<LoremIpsum />} />
+            <Route path="tools/lorem-ipsum" element={<Navigate to="/tools/lorem-ipsum/generator" replace />} />
+            <Route path="tools/lorem-ipsum/generator" element={<LoremTools tool="generator" />} />
+            <Route path="tools/lorem-ipsum/characters" element={<LoremTools tool="characters" />} />
+            <Route path="tools/lorem-ipsum/bytes" element={<LoremTools tool="bytes" />} />
+            <Route path="tools/lorem-ipsum/title" element={<LoremTools tool="title" />} />
+            <Route path="tools/lorem-ipsum/slug" element={<LoremTools tool="slug" />} />
+            <Route path="tools/lorem-ipsum/camel-case" element={<LoremTools tool="camel-case" />} />
+            <Route path="tools/lorem-ipsum/list" element={<LoremTools tool="list" />} />
+            <Route path="tools/lorem-ipsum/headings" element={<LoremTools tool="headings" />} />
+            <Route path="tools/lorem-ipsum/html" element={<LoremTools tool="html" />} />
+            <Route path="tools/lorem-ipsum/markdown" element={<LoremTools tool="markdown" />} />
+            <Route path="tools/lorem-ipsum/json" element={<LoremTools tool="json" />} />
             <Route path="*" element={<Navigate to="/tools/string/url-encode" replace />} />
           </Route>
         </Routes>

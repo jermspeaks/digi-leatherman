@@ -1,5 +1,5 @@
 import { sidebarConfig } from '@/config/sidebarConfig';
-import { LOREM_IPSUM_DESCRIPTION } from '@/components/LoremIpsum';
+import { LOREM_TOOL_DESCRIPTIONS } from '@/components/LoremTools';
 import { TOOL_DESCRIPTIONS } from '@/components/StringTools';
 
 export interface ToolForSearch {
@@ -21,7 +21,7 @@ export function getToolsForSearch(): ToolForSearch[] {
       result.push({
         id: item.id,
         label: item.label,
-        description: TOOL_DESCRIPTIONS[item.id] ?? LOREM_IPSUM_DESCRIPTION[item.id] ?? '',
+        description: TOOL_DESCRIPTIONS[item.id] ?? LOREM_TOOL_DESCRIPTIONS[item.id] ?? '',
         path: item.path,
         categoryLabel: category.label,
       });
