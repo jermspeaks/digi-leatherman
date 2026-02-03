@@ -21,7 +21,6 @@ export const sidebarConfig: SidebarCategory[] = [
       { id: 'url-decode', label: 'URL decode', path: '/tools/string/url-decode', subGroup: 'URL' },
       { id: 'base64-encode', label: 'Base64 encode', path: '/tools/string/base64-encode', subGroup: 'Base64' },
       { id: 'base64-decode', label: 'Base64 decode', path: '/tools/string/base64-decode', subGroup: 'Base64' },
-      { id: 'trim', label: 'Trim', path: '/tools/string/trim', subGroup: 'Trim' },
       { id: 'upper-case', label: 'Upper Case', path: '/tools/string/upper-case', subGroup: 'Case' },
       { id: 'lower-case', label: 'Lower Case', path: '/tools/string/lower-case', subGroup: 'Case' },
       { id: 'capital-case', label: 'Capital Case', path: '/tools/string/capital-case', subGroup: 'Case' },
@@ -30,6 +29,7 @@ export const sidebarConfig: SidebarCategory[] = [
       { id: 'camel-case', label: 'Camel Case', path: '/tools/string/camel-case', subGroup: 'Case' },
       { id: 'pascal-case', label: 'Pascal Case', path: '/tools/string/pascal-case', subGroup: 'Case' },
       { id: 'sentence-case', label: 'Sentence Case', path: '/tools/string/sentence-case', subGroup: 'Case' },
+      { id: 'trim', label: 'Trim', path: '/tools/string/trim', subGroup: 'Trim' },
     ],
   },
   {
