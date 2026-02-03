@@ -38,15 +38,22 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
           {tools.map((tool) => (
             <CommandItem
               key={tool.id}
-              value={`${tool.label} ${tool.description}`}
+              value={`${tool.label} ${tool.categoryLabel} ${tool.description}`}
               onSelect={() => handleSelect(tool.path)}
             >
-              <span>{tool.label}</span>
-              {tool.description && (
-                <span className="ml-2 text-muted-foreground truncate max-w-[200px]">
-                  {tool.description}
-                </span>
-              )}
+              <div className="flex flex-col gap-0.5 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span>{tool.label}</span>
+                  <span className="text-muted-foreground text-xs shrink-0">
+                    {tool.categoryLabel}
+                  </span>
+                </div>
+                {tool.description && (
+                  <span className="text-muted-foreground text-xs truncate">
+                    {tool.description}
+                  </span>
+                )}
+              </div>
             </CommandItem>
           ))}
         </CommandGroup>
