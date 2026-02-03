@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { Layout } from './components/Layout';
 import { StringTools } from './components/StringTools';
 
 function App() {
   return (
     <ThemeProvider>
+      <TooltipProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -27,6 +29,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </TooltipProvider>
     </ThemeProvider>
   );
 }
