@@ -31,6 +31,7 @@ function App() {
             <Route path="tools/string/camel-case" element={<StringTools tool="camel-case" />} />
             <Route path="tools/string/pascal-case" element={<StringTools tool="pascal-case" />} />
             <Route path="tools/string/sentence-case" element={<StringTools tool="sentence-case" />} />
+            <Route path="tools/string/spell-out" element={<StringTools tool="spell-out" />} />
             <Route path="tools/lorem-ipsum" element={<Navigate to="/tools/lorem-ipsum/generator" replace />} />
             <Route path="tools/lorem-ipsum/generator" element={<LoremTools tool="generator" />} />
             <Route path="tools/lorem-ipsum/characters" element={<LoremTools tool="characters" />} />

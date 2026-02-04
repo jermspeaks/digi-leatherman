@@ -17,6 +17,7 @@ import {
   sentenceCase,
   parseUrlParams,
   createUrlWithParams,
+  spellOut,
 } from '../api/stringTools';
 import type { StringResult } from '../api/stringTools';
 
@@ -35,7 +36,8 @@ export type StringToolId =
   | 'kebab-case'
   | 'camel-case'
   | 'pascal-case'
-  | 'sentence-case';
+  | 'sentence-case'
+  | 'spell-out';
 
 type ToolConfig = {
   id: StringToolId;
@@ -182,6 +184,15 @@ const TOOL_CONFIG: ToolConfig[] = [
     placeholder: 'Text to convert…',
     buttonLabel: 'Convert',
     apiFn: sentenceCase,
+  },
+  {
+    id: 'spell-out',
+    label: 'Spell out',
+    description: 'Spells out text using the NATO/military phonetic alphabet (e.g. A for Alpha, B for Bravo). Only letters are converted; non-letters are skipped.',
+    example: { input: 'AB', output: 'A for Alpha, B for Bravo' },
+    placeholder: 'Text to spell out…',
+    buttonLabel: 'Spell out',
+    apiFn: (v) => spellOut(v, 'nato'),
   },
 ];
 

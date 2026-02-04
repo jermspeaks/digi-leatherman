@@ -610,3 +610,60 @@ func TestCreateURLWithParams(t *testing.T) {
 		})
 	}
 }
+
+func TestSpellOutLetters(t *testing.T) {
+	cases := []struct {
+		name string
+		in   string
+		want string
+	}{
+		{"empty", "", ""},
+		{"AB", "AB", "A for Alpha, B for Bravo"},
+		{"lowercase ab", "ab", "A for Alpha, B for Bravo"},
+		{"A B", "A B", "A for Alpha, B for Bravo"},
+		{"A1B digit skipped", "A1B", "A for Alpha, B for Bravo"},
+		{"single letter", "Z", "Z for Zulu"},
+		{"hello", "hello", "H for Hotel, E for Echo, L for Lima, L for Lima, O for Oscar"},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			got := spellOutLetters(tc.in, natoPhonetic)
+			if got != tc.want {
+				t.Errorf("spellOutLetters(%q) = %q, want %q", tc.in, got, tc.want)
+			}
+		})
+	}
+}
+
+func TestSpellOut(t *testing.T) {
+	cases := []struct {
+		name           string
+		method         string
+		body           string
+		wantStatus     int
+		wantResult     string
+		checkResult    bool
+	}{
+		{"method not allowed", "GET", "", http.StatusMethodNotAllowed, "", false},
+		{"invalid JSON", "POST", "{", http.StatusBadRequest, "", false},
+		{"valid AB", "POST", `{"value":"AB"}`, http.StatusOK, "A for Alpha, B for Bravo", true},
+		{"empty value", "POST", `{"value":""}`, http.StatusOK, "", true},
+		{"default alphabet", "POST", `{"value":"ab"}`, http.StatusOK, "A for Alpha, B for Bravo", true},
+		{"explicit nato", "POST", `{"value":"XY","alphabet":"nato"}`, http.StatusOK, "X for X-ray, Y for Yankee", true},
+		{"unknown alphabet", "POST", `{"value":"A","alphabet":"lapd"}`, http.StatusBadRequest, "", false},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			status, body := runHandler(t, SpellOut, tc.method, tc.body)
+			if status != tc.wantStatus {
+				t.Errorf("status = %d, want %d; body: %s", status, tc.wantStatus, body)
+			}
+			if tc.checkResult {
+				got := parseResult(t, body)
+				if got != tc.wantResult {
+					t.Errorf("result = %q, want %q", got, tc.wantResult)
+				}
+			}
+		})
+	}
+}

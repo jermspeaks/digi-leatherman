@@ -76,3 +76,16 @@ export async function parseUrlParams(value: string): Promise<StringResult> {
 export async function createUrlWithParams(value: string): Promise<StringResult> {
   return postString('/api/string/url-param-creator', value);
 }
+
+export async function spellOut(value: string, alphabet?: string): Promise<StringResult> {
+  const res = await fetch(`${API_BASE}/api/string/spell-out`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ value, alphabet: alphabet ?? 'nato' }),
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text || `HTTP ${res.status}`);
+  }
+  return res.json();
+}

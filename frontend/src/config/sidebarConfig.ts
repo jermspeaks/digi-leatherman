@@ -31,6 +31,7 @@ export const sidebarConfig: SidebarCategory[] = [
       { id: 'camel-case', label: 'Camel Case', path: '/tools/string/camel-case', subGroup: 'Case' },
       { id: 'pascal-case', label: 'Pascal Case', path: '/tools/string/pascal-case', subGroup: 'Case' },
       { id: 'sentence-case', label: 'Sentence Case', path: '/tools/string/sentence-case', subGroup: 'Case' },
+      { id: 'spell-out', label: 'Spell out', path: '/tools/string/spell-out', subGroup: 'Spelling' },
       { id: 'trim', label: 'Trim', path: '/tools/string/trim', subGroup: 'Trim' },
     ],
   },
