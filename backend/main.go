@@ -15,6 +15,8 @@ func main() {
 
 	mux.HandleFunc("/api/string/url-encode", cors(handlers.URLEncode))
 	mux.HandleFunc("/api/string/url-decode", cors(handlers.URLDecode))
+	mux.HandleFunc("/api/string/url-parse-params", cors(handlers.ParseURLParams))
+	mux.HandleFunc("/api/string/url-param-creator", cors(handlers.CreateURLWithParams))
 	mux.HandleFunc("/api/string/base64-encode", cors(handlers.Base64Encode))
 	mux.HandleFunc("/api/string/base64-decode", cors(handlers.Base64Decode))
 	mux.HandleFunc("/api/string/trim", cors(handlers.Trim))

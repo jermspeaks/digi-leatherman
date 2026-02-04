@@ -15,12 +15,16 @@ import {
   camelCase,
   pascalCase,
   sentenceCase,
+  parseUrlParams,
+  createUrlWithParams,
 } from '../api/stringTools';
 import type { StringResult } from '../api/stringTools';
 
 export type StringToolId =
   | 'url-encode'
   | 'url-decode'
+  | 'url-parse-params'
+  | 'url-param-creator'
   | 'base64-encode'
   | 'base64-decode'
   | 'trim'
@@ -61,6 +65,24 @@ const TOOL_CONFIG: ToolConfig[] = [
     placeholder: 'Encoded string to decode…',
     buttonLabel: 'Decode',
     apiFn: urlDecode,
+  },
+  {
+    id: 'url-parse-params',
+    label: 'URL - Parser for params',
+    description: 'Parses query parameters from a full URL or raw query string and returns them as JSON.',
+    example: { input: 'https://example.com?foo=bar&baz=qux', output: '{"baz":["qux"],"foo":["bar"]}' },
+    placeholder: 'URL or query string (e.g. ?foo=bar&baz=qux)…',
+    buttonLabel: 'Parse',
+    apiFn: parseUrlParams,
+  },
+  {
+    id: 'url-param-creator',
+    label: 'URL - param creator',
+    description: 'Builds a URL from a base URL (first line) and key=value params (one per line).',
+    example: { input: 'https://api.example.com/search\nq=hello\nlimit=10', output: 'https://api.example.com/search?limit=10&q=hello' },
+    placeholder: 'First line: base URL. Following lines: key=value (one per line)…',
+    buttonLabel: 'Create URL',
+    apiFn: createUrlWithParams,
   },
   {
     id: 'base64-encode',

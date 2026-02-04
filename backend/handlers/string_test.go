@@ -529,3 +529,84 @@ func TestSentenceCase(t *testing.T) {
 		})
 	}
 }
+
+func TestParseURLParams(t *testing.T) {
+	cases := []struct {
+		name           string
+		method         string
+		body           string
+		wantStatus     int
+		wantResult     string
+		checkResult    bool
+	}{
+		{"method not allowed", "GET", "", http.StatusMethodNotAllowed, "", false},
+		{"invalid JSON", "POST", "{", http.StatusBadRequest, "", false},
+		{"empty query", "POST", `{"value":"https://example.com"}`, http.StatusOK, "{}", true},
+		{"full URL", "POST", `{"value":"https://example.com?foo=bar&baz=qux"}`, http.StatusOK, `{"baz":["qux"],"foo":["bar"]}`, true},
+		{"query only", "POST", `{"value":"foo=bar&limit=10"}`, http.StatusOK, `{"foo":["bar"],"limit":["10"]}`, true},
+		{"multi-value", "POST", `{"value":"tag=a&tag=b"}`, http.StatusOK, `{"tag":["a","b"]}`, true},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			status, body := runHandler(t, ParseURLParams, tc.method, tc.body)
+			if status != tc.wantStatus {
+				t.Errorf("status = %d, want %d; body: %s", status, tc.wantStatus, body)
+			}
+			if tc.checkResult {
+				got := parseResult(t, body)
+				// JSON key order may vary; compare as parsed objects for multi-key cases
+				if tc.name == "full URL" || tc.name == "query only" {
+					var gotMap, wantMap map[string]interface{}
+					if err := json.Unmarshal([]byte(got), &gotMap); err != nil {
+						t.Fatalf("parseResult JSON: %v", err)
+					}
+					if err := json.Unmarshal([]byte(tc.wantResult), &wantMap); err != nil {
+						t.Fatalf("wantResult JSON: %v", err)
+					}
+					if !reflect.DeepEqual(gotMap, wantMap) {
+						t.Errorf("result = %q, want %q", got, tc.wantResult)
+					}
+				} else if got != tc.wantResult {
+					t.Errorf("result = %q, want %q", got, tc.wantResult)
+				}
+			}
+		})
+	}
+}
+
+func TestCreateURLWithParams(t *testing.T) {
+	cases := []struct {
+		name           string
+		method         string
+		body           string
+		wantStatus     int
+		wantResult     string
+		checkResult    bool
+	}{
+		{"method not allowed", "GET", "", http.StatusMethodNotAllowed, "", false},
+		{"invalid JSON", "POST", "{", http.StatusBadRequest, "", false},
+		{"missing base URL", "POST", `{"value":""}`, http.StatusBadRequest, "", false},
+		{"normal case", "POST", `{"value":"https://api.example.com/search\nq=hello\nlimit=10"}`, http.StatusOK, "https://api.example.com/search?limit=10&q=hello", true},
+		{"empty params", "POST", `{"value":"https://example.com/page"}`, http.StatusOK, "https://example.com/page", true},
+		{"encoding", "POST", `{"value":"https://example.com\nq=hello world"}`, http.StatusOK, "https://example.com?q=hello+world", true},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			status, body := runHandler(t, CreateURLWithParams, tc.method, tc.body)
+			if status != tc.wantStatus {
+				t.Errorf("status = %d, want %d; body: %s", status, tc.wantStatus, body)
+			}
+			if tc.checkResult {
+				got := parseResult(t, body)
+				// Query param order may vary (limit=10&q=hello vs q=hello&limit=10)
+				if tc.name == "normal case" {
+					if got != "https://api.example.com/search?limit=10&q=hello" && got != "https://api.example.com/search?q=hello&limit=10" {
+						t.Errorf("result = %q, want either query order", got)
+					}
+				} else if got != tc.wantResult {
+					t.Errorf("result = %q, want %q", got, tc.wantResult)
+				}
+			}
+		})
+	}
+}

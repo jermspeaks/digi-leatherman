@@ -18,6 +18,8 @@ function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="tools/string/url-encode" element={<StringTools tool="url-encode" />} />
             <Route path="tools/string/url-decode" element={<StringTools tool="url-decode" />} />
+            <Route path="tools/string/url-parse-params" element={<StringTools tool="url-parse-params" />} />
+            <Route path="tools/string/url-param-creator" element={<StringTools tool="url-param-creator" />} />
             <Route path="tools/string/base64-encode" element={<StringTools tool="base64-encode" />} />
             <Route path="tools/string/base64-decode" element={<StringTools tool="base64-decode" />} />
             <Route path="tools/string/trim" element={<StringTools tool="trim" />} />

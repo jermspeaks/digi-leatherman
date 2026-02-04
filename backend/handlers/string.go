@@ -251,3 +251,86 @@ func SentenceCase(w http.ResponseWriter, r *http.Request) {
 	}
 	writeJSON(w, StringResponse{Result: string(runes)})
 }
+
+// ParseURLParams parses query parameters from a full URL or raw query string and returns them as JSON.
+// Input can be e.g. "https://example.com?foo=bar&baz=qux" or "foo=bar&baz=qux".
+func ParseURLParams(w http.ResponseWriter, r *http.Request) {
+	req, ok := decodeBody(w, r)
+	if !ok {
+		return
+	}
+	raw := strings.TrimSpace(req.Value)
+	var query string
+	if strings.Contains(raw, "?") {
+		u, err := url.Parse(raw)
+		if err != nil {
+			http.Error(w, "invalid URL", http.StatusBadRequest)
+			return
+		}
+		query = u.RawQuery
+	} else {
+		u, err := url.Parse(raw)
+		if err == nil && (u.Scheme != "" || u.Host != "") {
+			query = u.RawQuery // URL with no query string
+		} else {
+			query = raw // raw query string
+		}
+	}
+	if query == "" {
+		writeJSON(w, StringResponse{Result: "{}"})
+		return
+	}
+	vals, err := url.ParseQuery(query)
+	if err != nil {
+		http.Error(w, "invalid query string", http.StatusBadRequest)
+		return
+	}
+	// url.Values is map[string][]string; marshal as JSON for readable output
+	out, err := json.Marshal(vals)
+	if err != nil {
+		http.Error(w, "failed to format result", http.StatusInternalServerError)
+		return
+	}
+	writeJSON(w, StringResponse{Result: string(out)})
+}
+
+// CreateURLWithParams builds a URL from a base URL (first line) and key=value params (remaining lines).
+// Empty lines are ignored. Supports key=value or key: value.
+func CreateURLWithParams(w http.ResponseWriter, r *http.Request) {
+	req, ok := decodeBody(w, r)
+	if !ok {
+		return
+	}
+	lines := strings.Split(req.Value, "\n")
+	if len(lines) == 0 || strings.TrimSpace(lines[0]) == "" {
+		http.Error(w, "base URL required (first line)", http.StatusBadRequest)
+		return
+	}
+	baseRaw := strings.TrimSpace(lines[0])
+	u, err := url.Parse(baseRaw)
+	if err != nil {
+		http.Error(w, "invalid base URL", http.StatusBadRequest)
+		return
+	}
+	u.RawQuery = "" // strip existing query
+	vals := make(url.Values)
+	for i := 1; i < len(lines); i++ {
+		line := strings.TrimSpace(lines[i])
+		if line == "" {
+			continue
+		}
+		key, val := "", ""
+		if idx := strings.Index(line, "="); idx >= 0 {
+			key = strings.TrimSpace(line[:idx])
+			val = strings.TrimSpace(line[idx+1:])
+		} else if idx := strings.Index(line, ":"); idx >= 0 {
+			key = strings.TrimSpace(line[:idx])
+			val = strings.TrimSpace(line[idx+1:])
+		}
+		if key != "" {
+			vals.Set(key, val)
+		}
+	}
+	u.RawQuery = vals.Encode()
+	writeJSON(w, StringResponse{Result: u.String()})
+}

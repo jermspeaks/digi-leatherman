@@ -68,3 +68,11 @@ export async function pascalCase(value: string): Promise<StringResult> {
 export async function sentenceCase(value: string): Promise<StringResult> {
   return postString('/api/string/sentence-case', value);
 }
+
+export async function parseUrlParams(value: string): Promise<StringResult> {
+  return postString('/api/string/url-parse-params', value);
+}
+
+export async function createUrlWithParams(value: string): Promise<StringResult> {
+  return postString('/api/string/url-param-creator', value);
+}
