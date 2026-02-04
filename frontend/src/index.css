@@ -2,17 +2,30 @@
 
 /* Theme: default dark. Tailwind generates utilities (text-text, bg-bg, etc.) from these. */
 @theme {
+  /* Primary (accent) palette – purple scale for links, primary actions, sidebar active state */
+  --color-primary-50: #fef5fe;
+  --color-primary-100: #fce9fe;
+  --color-primary-200: #f8d3fb;
+  --color-primary-300: #f5b0f7;
+  --color-primary-400: #f081f1;
+  --color-primary-500: #e351e4;
+  --color-primary-600: #c831c5;
+  --color-primary-700: #a625a2;
+  --color-primary-800: #882083;
+  --color-primary-900: #661d61;
+  --color-primary-950: #490944;
+
   /* Project custom colors (unchanged) */
   --color-text: rgba(255, 255, 255, 0.87);
   --color-text-muted: rgba(255, 255, 255, 0.6);
   --color-bg: #242424;
   --color-bg-elevated: #1a1a1a;
   --color-border: #444;
-  --color-accent: #646cff;
-  --color-accent-hover: #535bf2;
+  --color-accent: var(--color-primary-500);
+  --color-accent-hover: var(--color-primary-400);
   --color-sidebar-bg: #1e1e1e;
-  --color-sidebar-active: rgba(100, 108, 255, 0.2);
-  --color-sidebar-active-bar: #646cff;
+  --color-sidebar-active: color-mix(in srgb, var(--color-primary-500) 20%, transparent);
+  --color-sidebar-active-bar: var(--color-primary-500);
   --color-navbar-bg: #1e1e1e;
   --color-navbar-border: #333;
   /* shadcn/ui Tailwind utilities (reference vars defined in :root below) */
