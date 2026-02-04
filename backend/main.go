@@ -28,6 +28,7 @@ func main() {
 	mux.HandleFunc("/api/string/camel-case", cors(handlers.CamelCase))
 	mux.HandleFunc("/api/string/pascal-case", cors(handlers.PascalCase))
 	mux.HandleFunc("/api/string/sentence-case", cors(handlers.SentenceCase))
+	mux.HandleFunc("/api/string/spell-out", cors(handlers.SpellOut))
 	mux.HandleFunc("/api/lorem-ipsum/generate", cors(handlers.LoremIpsum))
 	mux.HandleFunc("/api/json/format", cors(handlers.FormatJSON))
 	mux.HandleFunc("/api/json/minify", cors(handlers.MinifyJSON))

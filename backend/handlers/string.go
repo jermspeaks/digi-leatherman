@@ -23,6 +23,12 @@ type StringResponse struct {
 	Result string `json:"result"`
 }
 
+// SpellOutRequest is the JSON body for the spell-out endpoint.
+type SpellOutRequest struct {
+	Value    string `json:"value"`
+	Alphabet string `json:"alphabet"`
+}
+
 // URLEncode encodes the request value for safe use in URL query strings (spaces become +, special chars percent-encoded).
 // Example: "hello world" -> "hello+world".
 func URLEncode(w http.ResponseWriter, r *http.Request) {
@@ -333,4 +339,55 @@ func CreateURLWithParams(w http.ResponseWriter, r *http.Request) {
 	}
 	u.RawQuery = vals.Encode()
 	writeJSON(w, StringResponse{Result: u.String()})
+}
+
+// natoPhonetic maps A–Z (uppercase rune) to NATO phonetic words.
+var natoPhonetic = map[rune]string{
+	'A': "Alpha", 'B': "Bravo", 'C': "Charlie", 'D': "Delta", 'E': "Echo",
+	'F': "Foxtrot", 'G': "Golf", 'H': "Hotel", 'I': "India", 'J': "Juliet",
+	'K': "Kilo", 'L': "Lima", 'M': "Mike", 'N': "November", 'O': "Oscar",
+	'P': "Papa", 'Q': "Quebec", 'R': "Romeo", 'S': "Sierra", 'T': "Tango",
+	'U': "Uniform", 'V': "Victor", 'W': "Whiskey", 'X': "X-ray", 'Y': "Yankee",
+	'Z': "Zulu",
+}
+
+// spellOutLetters converts each letter in s to "X for Word" using the given map (rune -> word).
+// Non-letters are skipped. Result segments are joined with ", ".
+func spellOutLetters(s string, letterToWord map[rune]string) string {
+	var parts []string
+	for _, r := range s {
+		upper := unicode.ToUpper(r)
+		if word, ok := letterToWord[upper]; ok {
+			parts = append(parts, string(upper)+" for "+word)
+		}
+	}
+	return strings.Join(parts, ", ")
+}
+
+// SpellOut converts the request value to "X for Word" spelling using the chosen alphabet (e.g. nato).
+// Example: "AB" -> "A for Alpha, B for Bravo".
+func SpellOut(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	var req SpellOutRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "invalid JSON", http.StatusBadRequest)
+		return
+	}
+	alphabet := req.Alphabet
+	if alphabet == "" {
+		alphabet = "nato"
+	}
+	var letterToWord map[rune]string
+	switch alphabet {
+	case "nato":
+		letterToWord = natoPhonetic
+	default:
+		http.Error(w, "unknown alphabet", http.StatusBadRequest)
+		return
+	}
+	result := spellOutLetters(req.Value, letterToWord)
+	writeJSON(w, StringResponse{Result: result})
 }
