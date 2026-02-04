@@ -19,8 +19,8 @@ export const sidebarConfig: SidebarCategory[] = [
     items: [
       { id: 'url-encode', label: 'URL encode', path: '/tools/string/url-encode', subGroup: 'URL' },
       { id: 'url-decode', label: 'URL decode', path: '/tools/string/url-decode', subGroup: 'URL' },
-      { id: 'url-parse-params', label: 'URL - Parser for params', path: '/tools/string/url-parse-params', subGroup: 'URL' },
-      { id: 'url-param-creator', label: 'URL - param creator', path: '/tools/string/url-param-creator', subGroup: 'URL' },
+      { id: 'url-parse-params', label: 'URL params parser', path: '/tools/string/url-parse-params', subGroup: 'URL' },
+      { id: 'url-param-creator', label: 'URL param creator', path: '/tools/string/url-param-creator', subGroup: 'URL' },
       { id: 'base64-encode', label: 'Base64 encode', path: '/tools/string/base64-encode', subGroup: 'Base64' },
       { id: 'base64-decode', label: 'Base64 decode', path: '/tools/string/base64-decode', subGroup: 'Base64' },
       { id: 'upper-case', label: 'Upper Case', path: '/tools/string/upper-case', subGroup: 'Case' },

@@ -68,7 +68,7 @@ const TOOL_CONFIG: ToolConfig[] = [
   },
   {
     id: 'url-parse-params',
-    label: 'URL - Parser for params',
+    label: 'URL params parser',
     description: 'Parses query parameters from a full URL or raw query string and returns them as JSON.',
     example: { input: 'https://example.com?foo=bar&baz=qux', output: '{"baz":["qux"],"foo":["bar"]}' },
     placeholder: 'URL or query string (e.g. ?foo=bar&baz=qux)…',
@@ -77,7 +77,7 @@ const TOOL_CONFIG: ToolConfig[] = [
   },
   {
     id: 'url-param-creator',
-    label: 'URL - param creator',
+    label: 'URL param creator',
     description: 'Builds a URL from a base URL (first line) and key=value params (one per line).',
     example: { input: 'https://api.example.com/search\nq=hello\nlimit=10', output: 'https://api.example.com/search?limit=10&q=hello' },
     placeholder: 'First line: base URL. Following lines: key=value (one per line)…',
