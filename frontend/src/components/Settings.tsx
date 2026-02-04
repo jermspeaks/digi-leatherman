@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { APP_NAME, APP_EMOJI } from '../config/appBranding';
 import { useTheme } from '../context/ThemeContext';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -158,7 +159,7 @@ export function Settings() {
       </section>
 
       <p className="text-sm text-text-muted">
-        Digi Leatherman — Built with React, Vite, Tailwind CSS, shadcn/ui; backend in Go.
+        {APP_EMOJI} {APP_NAME} — Built with React, Vite, Tailwind CSS, shadcn/ui; backend in Go.
       </p>
     </div>
   );

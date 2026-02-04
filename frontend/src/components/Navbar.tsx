@@ -1,5 +1,6 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { SearchIcon } from "lucide-react";
+import { APP_NAME, APP_EMOJI } from "../config/appBranding";
 
 const navLinkBase =
   "px-3 py-2 text-sm font-medium no-underline rounded-none border-b-2 border-transparent hover:text-accent";
@@ -25,9 +26,9 @@ export function Navbar({ onOpenCommandPalette }: NavbarProps) {
           <Link
             to="/"
             className="text-xl font-semibold text-text no-underline hover:text-accent shrink-0"
-            aria-label="Digi Leatherman home"
+            aria-label={`${APP_NAME} home`}
           >
-            Digi Leatherman
+            {APP_EMOJI} {APP_NAME}
           </Link>
         </div>
         <div className="flex items-center gap-1 shrink-0">

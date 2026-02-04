@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Wrench: handle + jaw -->
+  <path d="M22 6l-4 4 4 4 4-4-4-4z" />
+  <path d="M18 10L8 20a4 4 0 105.66 5.66L24 16" />
+</svg>
