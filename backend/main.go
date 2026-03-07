@@ -35,6 +35,12 @@ func main() {
 	mux.HandleFunc("/api/json/validate", cors(handlers.ValidateJSON))
 	mux.HandleFunc("/api/json/path", cors(handlers.PathQueryJSON))
 	mux.HandleFunc("/api/json/diff", cors(handlers.DiffJSON))
+	mux.HandleFunc("/api/uuid/generate-v4", cors(handlers.GenerateUUIDv4))
+	mux.HandleFunc("/api/uuid/generate-v7", cors(handlers.GenerateUUIDv7))
+	mux.HandleFunc("/api/uuid/bulk-generate", cors(handlers.BulkGenerateUUID))
+	mux.HandleFunc("/api/uuid/validate", cors(handlers.ValidateUUID))
+	mux.HandleFunc("/api/uuid/parse", cors(handlers.ParseUUID))
+	mux.HandleFunc("/api/uuid/format", cors(handlers.FormatUUID))
 
 	addr := ":8100"
 	handler := middleware.Recovery(middleware.Logging(mux))

@@ -6,6 +6,7 @@ import { JsonTools } from './components/JsonTools';
 import { LoremTools } from './components/LoremTools';
 import { Settings } from './components/Settings';
 import { StringTools } from './components/StringTools';
+import { UuidTools } from './components/UuidTools';
 
 function App() {
   return (
@@ -50,6 +51,13 @@ function App() {
             <Route path="tools/json/validate" element={<JsonTools tool="validate" />} />
             <Route path="tools/json/path" element={<JsonTools tool="path" />} />
             <Route path="tools/json/diff" element={<JsonTools tool="diff" />} />
+            <Route path="tools/uuid" element={<Navigate to="/tools/uuid/generate-v4" replace />} />
+            <Route path="tools/uuid/generate-v4" element={<UuidTools tool="generate-v4" />} />
+            <Route path="tools/uuid/generate-v7" element={<UuidTools tool="generate-v7" />} />
+            <Route path="tools/uuid/bulk-generate" element={<UuidTools tool="bulk-generate" />} />
+            <Route path="tools/uuid/validate" element={<UuidTools tool="validate" />} />
+            <Route path="tools/uuid/parse" element={<UuidTools tool="parse" />} />
+            <Route path="tools/uuid/format" element={<UuidTools tool="format" />} />
             <Route path="*" element={<Navigate to="/tools/string/url-encode" replace />} />
           </Route>
         </Routes>

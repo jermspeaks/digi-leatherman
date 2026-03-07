@@ -63,6 +63,18 @@ export const sidebarConfig: SidebarCategory[] = [
       { id: 'diff', label: 'Diff', path: '/tools/json/diff', subGroup: 'Compare' },
     ],
   },
+  {
+    id: 'uuid',
+    label: 'UUID',
+    items: [
+      { id: 'generate-v4', label: 'Generate v4', path: '/tools/uuid/generate-v4', subGroup: 'Generate' },
+      { id: 'generate-v7', label: 'Generate v7', path: '/tools/uuid/generate-v7', subGroup: 'Generate' },
+      { id: 'bulk-generate', label: 'Bulk Generate', path: '/tools/uuid/bulk-generate', subGroup: 'Generate' },
+      { id: 'validate', label: 'Validate', path: '/tools/uuid/validate', subGroup: 'Utilities' },
+      { id: 'parse', label: 'Parse', path: '/tools/uuid/parse', subGroup: 'Utilities' },
+      { id: 'format', label: 'Format', path: '/tools/uuid/format', subGroup: 'Utilities' },
+    ],
+  },
 ];
 
 export interface BreadcrumbLabels {
