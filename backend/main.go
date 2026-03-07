@@ -41,6 +41,9 @@ func main() {
 	mux.HandleFunc("/api/uuid/validate", cors(handlers.ValidateUUID))
 	mux.HandleFunc("/api/uuid/parse", cors(handlers.ParseUUID))
 	mux.HandleFunc("/api/uuid/format", cors(handlers.FormatUUID))
+	mux.HandleFunc("/api/date/parse", cors(handlers.DateParse))
+	mux.HandleFunc("/api/date/timezone", cors(handlers.DateTimezone))
+	mux.HandleFunc("/api/date/countdown", cors(handlers.DateCountdown))
 
 	addr := ":8100"
 	handler := middleware.Recovery(middleware.Logging(mux))

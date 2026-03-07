@@ -75,6 +75,15 @@ export const sidebarConfig: SidebarCategory[] = [
       { id: 'format', label: 'Format', path: '/tools/uuid/format', subGroup: 'Utilities' },
     ],
   },
+  {
+    id: 'date',
+    label: 'Dates',
+    items: [
+      { id: 'parse', label: 'Parse & Format', path: '/tools/date/parse', subGroup: 'Parse' },
+      { id: 'timezone', label: 'Timezone Convert', path: '/tools/date/timezone', subGroup: 'Convert' },
+      { id: 'countdown', label: 'Countdown', path: '/tools/date/countdown', subGroup: 'Calculate' },
+    ],
+  },
 ];
 
 export interface BreadcrumbLabels {

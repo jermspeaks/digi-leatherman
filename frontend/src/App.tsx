@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Layout } from './components/Layout';
+import { DateTools } from './components/DateTools';
 import { JsonTools } from './components/JsonTools';
 import { LoremTools } from './components/LoremTools';
 import { Settings } from './components/Settings';
@@ -58,6 +59,10 @@ function App() {
             <Route path="tools/uuid/validate" element={<UuidTools tool="validate" />} />
             <Route path="tools/uuid/parse" element={<UuidTools tool="parse" />} />
             <Route path="tools/uuid/format" element={<UuidTools tool="format" />} />
+            <Route path="tools/date" element={<Navigate to="/tools/date/parse" replace />} />
+            <Route path="tools/date/parse" element={<DateTools tool="parse" />} />
+            <Route path="tools/date/timezone" element={<DateTools tool="timezone" />} />
+            <Route path="tools/date/countdown" element={<DateTools tool="countdown" />} />
             <Route path="*" element={<Navigate to="/tools/string/url-encode" replace />} />
           </Route>
         </Routes>
