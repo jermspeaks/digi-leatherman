@@ -127,6 +127,38 @@ export async function myTool(value: string, option: string): Promise<MyResult> {
 }
 ```
 
+### API Helper Functions
+
+The project uses reusable helpers in API files. Prefer these over raw fetch for consistency.
+
+**postString** (for simple string tools):
+
+```typescript
+async function postString(path: string, value: string): Promise<StringResult> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ value }),
+  });
+  if (!res.ok) throw new Error(await res.text() || `HTTP ${res.status}`);
+  return res.json();
+}
+```
+
+**postJSON** (typed, for complex payloads):
+
+```typescript
+async function postJSON<T>(path: string, body: object): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) throw new Error(await res.text() || `HTTP ${res.status}`);
+  return res.json();
+}
+```
+
 ## 5. Sidebar Config
 
 Add entry in `frontend/src/config/sidebarConfig.ts`:
