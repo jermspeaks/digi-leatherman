@@ -53,6 +53,8 @@ type MyToolResponse struct {
 }
 ```
 
+For all request/response pattern variants (multi-field, two-input, options, multi-output) and handler inventory, see the **go-handler-patterns** skill.
+
 ## 2. Register Route
 
 In `backend/main.go`, add the route with CORS wrapper:
@@ -170,6 +172,8 @@ Add entry in `frontend/src/config/sidebarConfig.ts`:
 - `subGroup` creates collapsible sections within a category
 - Single-item subGroups render as direct links
 
+For sidebar structure and grouping details, see **react-tool-component**.
+
 ## 6. Tool Component Config
 
 Add to the appropriate tool component's config array (e.g., `StringTools.tsx`):
@@ -189,6 +193,8 @@ Add to the appropriate tool component's config array (e.g., `StringTools.tsx`):
 Don't forget to:
 1. Import the API function
 2. Add the ID to the `ToolId` type union
+
+For config shape, multi-input tools, and UI patterns (dropdowns, number inputs, etc.), see **react-tool-component**.
 
 ## 7. Add Route (If New Page)
 
