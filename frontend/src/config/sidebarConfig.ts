@@ -84,6 +84,19 @@ export const sidebarConfig: SidebarCategory[] = [
       { id: 'countdown', label: 'Countdown', path: '/tools/date/countdown', subGroup: 'Calculate' },
     ],
   },
+  {
+    id: 'color',
+    label: 'Colors',
+    items: [
+      { id: 'convert', label: 'Convert', path: '/tools/color/convert', subGroup: 'Convert' },
+      { id: 'picker', label: 'Picker', path: '/tools/color/picker', subGroup: 'Convert' },
+      { id: 'contrast', label: 'Contrast', path: '/tools/color/contrast', subGroup: 'Analyze' },
+      { id: 'blindness', label: 'Color Blindness', path: '/tools/color/blindness', subGroup: 'Analyze' },
+      { id: 'palette', label: 'Palette', path: '/tools/color/palette', subGroup: 'Generate' },
+      { id: 'shades', label: 'Shades & Tints', path: '/tools/color/shades', subGroup: 'Generate' },
+      { id: 'harmonies', label: 'Harmonies', path: '/tools/color/harmonies', subGroup: 'Generate' },
+    ],
+  },
 ];
 
 export interface BreadcrumbLabels {

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Layout } from './components/Layout';
+import { ColorTools } from './components/ColorTools';
 import { DateTools } from './components/DateTools';
 import { JsonTools } from './components/JsonTools';
 import { LoremTools } from './components/LoremTools';
@@ -63,6 +64,14 @@ function App() {
             <Route path="tools/date/parse" element={<DateTools tool="parse" />} />
             <Route path="tools/date/timezone" element={<DateTools tool="timezone" />} />
             <Route path="tools/date/countdown" element={<DateTools tool="countdown" />} />
+            <Route path="tools/color" element={<Navigate to="/tools/color/convert" replace />} />
+            <Route path="tools/color/convert" element={<ColorTools tool="convert" />} />
+            <Route path="tools/color/picker" element={<ColorTools tool="picker" />} />
+            <Route path="tools/color/contrast" element={<ColorTools tool="contrast" />} />
+            <Route path="tools/color/blindness" element={<ColorTools tool="blindness" />} />
+            <Route path="tools/color/palette" element={<ColorTools tool="palette" />} />
+            <Route path="tools/color/shades" element={<ColorTools tool="shades" />} />
+            <Route path="tools/color/harmonies" element={<ColorTools tool="harmonies" />} />
             <Route path="*" element={<Navigate to="/tools/string/url-encode" replace />} />
           </Route>
         </Routes>

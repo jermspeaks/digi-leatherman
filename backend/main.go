@@ -44,6 +44,12 @@ func main() {
 	mux.HandleFunc("/api/date/parse", cors(handlers.DateParse))
 	mux.HandleFunc("/api/date/timezone", cors(handlers.DateTimezone))
 	mux.HandleFunc("/api/date/countdown", cors(handlers.DateCountdown))
+	mux.HandleFunc("/api/color/convert", cors(handlers.ColorConvert))
+	mux.HandleFunc("/api/color/contrast", cors(handlers.ContrastCheck))
+	mux.HandleFunc("/api/color/blindness", cors(handlers.ColorBlindness))
+	mux.HandleFunc("/api/color/palette", cors(handlers.ExtractPalette))
+	mux.HandleFunc("/api/color/shades", cors(handlers.GenerateShades))
+	mux.HandleFunc("/api/color/harmonies", cors(handlers.GenerateHarmonies))
 
 	addr := ":8100"
 	handler := middleware.Recovery(middleware.Logging(mux))
