@@ -7,6 +7,36 @@ description: Go HTTP handler patterns for Digital Leatherman backend. Use when c
 
 This project uses Go's standard library `net/http` with consistent patterns.
 
+## Handler Inventory
+
+Handlers live in `backend/handlers/`. Routes follow `/api/{category}/{action}` in `backend/main.go`.
+
+| File | Handler functions |
+|------|-------------------|
+| `string.go` | URLEncode, URLDecode, ParseURLParams, CreateURLWithParams, Base64Encode, Base64Decode, Trim, UpperCase, LowerCase, CapitalCase, SnakeCase, KebabCase, CamelCase, PascalCase, SentenceCase, SpellOut |
+| `json.go` | FormatJSON, MinifyJSON, ValidateJSON, PathQueryJSON, DiffJSON |
+| `uuid.go` | GenerateUUIDv4, GenerateUUIDv7, BulkGenerateUUID, ValidateUUID, ParseUUID, FormatUUID |
+| `lorem.go` | LoremIpsum (single endpoint; dispatches by `tool` in request) |
+| `date.go` | DateParse, DateTimezone, DateCountdown |
+| `color.go` | ColorConvert, ContrastCheck, ColorBlindness, ExtractPalette, GenerateShades, GenerateHarmonies |
+
+When adding a tool, add to the appropriate file or create a new one for a new category; match the naming style (PascalCase handler names).
+
+## Request/Response Pattern Catalog
+
+Choose a pattern that fits your tool; define types in the same handler file or a shared file.
+
+| Pattern | Use when | Example |
+|---------|----------|---------|
+| **Simple single-value** | One input, one output | `StringRequest` / `StringResponse` in `string.go` |
+| **Multi-field** | One payload, multiple input fields | `PathRequest` (value + path) in `json.go` |
+| **Two-input comparison** | Two values to compare | `DiffRequest` (valueA, valueB) in `json.go` |
+| **Complex options** | Many optional/configuration fields | `LoremRequest` + `LoremOptions` in `lorem.go` |
+| **Multiple output fields** | One input, several result fields | `CountdownResponse` (days, hours, minutes, seconds, isPast, text) in `date.go` |
+
+- **Simple**: use shared `decodeBody(w, r)` when your request is `StringRequest`.
+- **Custom types**: decode manually (method check + `json.NewDecoder(r.Body).Decode(&req)`); see Handler Pattern below.
+
 ## Request/Response Types
 
 Defined in `backend/handlers/string.go`:
@@ -57,7 +87,9 @@ func writeJSON(w http.ResponseWriter, v interface{}) {
 
 ## Handler Pattern
 
-Standard handler structure:
+Use **decodeBody** when the request is `StringRequest` (single `value`). Use **manual decode** for any other request type (multi-field, two-input, options, or custom structs).
+
+With `StringRequest` (decodeBody):
 
 ```go
 func MyHandler(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +106,7 @@ func MyHandler(w http.ResponseWriter, r *http.Request) {
 }
 ```
 
-For custom request types, decode manually:
+With custom request types (manual decode):
 
 ```go
 func CustomHandler(w http.ResponseWriter, r *http.Request) {
@@ -136,6 +168,13 @@ http.Error(w, "invalid value", http.StatusBadRequest)             // 400
 http.Error(w, "internal error", http.StatusInternalServerError)   // 500
 ```
 
+## Key Findings
+
+- **POST-only** – Every handler validates `r.Method == http.MethodPost` first; reject others with 405.
+- **JSON only** – No binary or file-upload handlers; input is `json.NewDecoder(r.Body).Decode()`, output is `writeJSON()`.
+- **Validation** – Invalid input → 400; server/processing errors → 500. Validation results (e.g. “is this valid?”) can be returned as structured JSON in the response body instead of only HTTP errors.
+- **Single-endpoint dispatch** – For one route serving multiple tools, dispatch on a request field (e.g. `lorem.go` uses `tool`); keep handler logic in one place.
+
 ## Pure Functions
 
 Extract pure logic into testable functions:
@@ -169,3 +208,7 @@ Applied in `main.go`:
 ```go
 handler := middleware.Recovery(middleware.Logging(mux))
 ```
+
+## Adding a New Backend Tool
+
+Pick the right handler file and request/response pattern from this skill (inventory and pattern catalog above), then add your handler and register the route in `main.go`. For the full workflow—handler tests, frontend API client, sidebar config, tool component config, and E2E testing—follow the **add-tool** skill checklist.
